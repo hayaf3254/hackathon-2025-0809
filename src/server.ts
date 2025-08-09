@@ -1,12 +1,14 @@
 import express from "express";
 import path from "path";
 import { query } from "./db";
+import aiRouter from "./router/AI"; 
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 // 静的ファイル（生HTML/CSS/JS）を配信
 app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(express.json());
 
 // APIの例
 app.get("/api/hello", (_req, res) => {
@@ -40,6 +42,8 @@ app.get('/api/records', async (_req, res) => {
     res.status(500).json({ error: e?.message ?? 'fetch_error' });
   }
 });
+
+app.use('/api/ai', aiRouter);
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
