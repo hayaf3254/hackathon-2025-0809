@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { query } from "./db";
 import aiRouter from "./router/AI"; 
+import dbOpeRouter from "./router/db_ope"; 
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -44,6 +45,7 @@ app.get('/api/records', async (_req, res) => {
 });
 
 app.use('/api/ai', aiRouter);
+app.use('/router', dbOpeRouter);
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
