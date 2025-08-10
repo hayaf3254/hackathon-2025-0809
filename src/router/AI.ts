@@ -42,9 +42,9 @@ router.post('/', async (req: Request<{}, {}, AdviceRequestBody>, res: Response) 
         `;
 
     const result = await model.generateContent(prompt);
-    const advice = result.response.text().trim();
+    const message = result.response.text().trim();
 
-    res.json({ advice });
+    res.json({ message });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'ai_error' });
