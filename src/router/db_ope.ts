@@ -40,4 +40,30 @@ router.post('/save', async (req: Request, res: Response) =>  {
     }
 });
 
+
+router.post('/seven', async (req: Request, res: Response) => {
+  try {
+    const {user_id} = req.body;
+
+    if (isNaN(user_id)) {
+      return res.status(400).json({ error: 'invalid_user_id' });
+    }
+
+    const query = `
+      SELECT *
+      FROM records
+      WHERE user_id = $1
+      ORDER BY score_id DESC
+      LIMIT 7;
+    `;
+    const result = await pool.query(query, [user_id]);
+
+    res.json(result.rows);
+  }
+    catch(e){
+    console.error(e);
+    res.status(500).json({ error: 'getできません' });
+    }
+})
+
 export default router;
