@@ -2,11 +2,11 @@ name: Only dev can merge into main
 
 on:
   pull_request:
-    branches: [ main ]  # main へのPRだけ対象
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
 
 jobs:
   enforce-dev-source:
+    if: ${{ github.base_ref == 'main' }}  # main 向けPRのときだけ実行
     runs-on: ubuntu-latest
     steps:
       - name: Check head branch is dev
