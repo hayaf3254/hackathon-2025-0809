@@ -33,10 +33,13 @@ router.post('/', async (req: Request<{}, {}, AdviceRequestBody>, res: Response) 
       return res.status(400).json({ error: 'invalid_payload' });
     }
 
-    const prompt = `
-あなたは短く厳しめの睡眠コーチです。学生向けに日本語で80文字以内の一言アドバイスを返してください。絵文字は使わない。
-入力: 睡眠時間=${sleeping_time}h, 眠気(1-5)=${sleeping_score}, 集中度(1-5)=${con_score}
-`;
+        const prompt = `
+        あなたは短く励ましつつも少し厳しめの睡眠コーチです。
+        昼間に眠くなりがちな学生向けに、日本語で80文字以内の一言アドバイスを返してください。
+        説教臭くしすぎず、改善点を明確にし、前向きな気持ちになるようにしてください。
+        絵文字は使わない。
+        入力: 睡眠時間=${sleeping_time}h, 日中の眠気度合い(1-5)=${sleeping_score}, 集中度(1-5)=${con_score}
+        `;
 
     const result = await model.generateContent(prompt);
     const message = result.response.text().trim();
